@@ -1,0 +1,34 @@
+program_for_emgw_galaxy_skymap : [Requirements: program_for_emgw_galaxy_skymap.py, tiles_GIT_0.71_0.59.csv ; Creates: final_GIT_FOV_Coverage2.csv" and "final_GIT_FOV_Coverage2_prob_mass.csv"]
+
+1) This program calculates the total probability (Mass based Prob and Mass*Ligo_Prob based prob) within the GIT Field of View centered at each tile.
+2) It takes input a csv file which is a file containing the tile centers for GIT tiles "tiles_GIT_0.71_0.59.csv"
+3) This program finally geneartes 2 csv files named "final_GIT_FOV_Coverage2.csv" and "final_GIT_FOV_Coverage2_prob_mass.csv"
+4) The first file contains the ranked list of tile centers based on highest total mass contained in each FOV, second contains the same list ranked with probMass.
+NOTE : This program only considers the top 200 galaxies to find the ranked list, this number can be made a hperparameter or an argument.
+
+
+
+
+Galaxy_targeting_list : [Requirements: galaxy_targeting_list.py; Creates: Various plots]
+
+1) This program calculates the general ranked list of galaxies based on probablity of finding EM counterpart for a given LIGO skymap.
+2) This can also generate some plots like projections, Mass and ProbMass coverage based on the arguments passed (can be looked up in help section).
+3) The list generated are based on mass and Prob*mass values.
+
+
+
+How to run astreaks:  [Requirements: astreaks.py, astroid_coordinates_utility.py; Creates: rock_coords_{ast_name}.csv, MPC_report-{ast_name}.txt]
+
+1) Run astreaks with command : python astreaks.py --ast '' --date '' --x_ast '' --y_ast '' --vel '' --streak_pa ''
+
+NOTE: streak_pa is an optional argument which is not mandatory after current updates, however it is advisable to enter it manually when the relative motion of 
+astroid in the image is very less asa compared to BG stars (as a matter of fact running astreaks is not even required in such cases)
+
+2) Once the pipeline has run, it creates a file named: rock_coords_{ast_name}.csv
+3) Fill in correct values under all the header fileds for all the images in csv file.
+4) This file is used to feed data to another pipeline which detects asteroid automatically in the image based on PSF fitting.
+5) Under x_phy, y_phy, enter the approximate physical coordinates of the asteroid from the RAW image(within 30 pix uncertainity margin)
+5) Now to run the PSF fitting pipeline, run the file "astroid_coordinates_utility.py".
+6) The argument takes the Name of the asteroid on which the pipeline is being run.
+7) Once this is run, it will populate the "rock_coords_{ast_name}.csv" file with correct ra, dec of the asteroid under the columns : "ra", "dec"
+8) Use these in the MPC report file to run find_orb on
